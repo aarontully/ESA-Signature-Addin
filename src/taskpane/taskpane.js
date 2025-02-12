@@ -9,8 +9,9 @@ Office.onReady((info) => {
 });
 
 function checkUserInfo() {
-  const user_info = Office.context.roamingSettings.get('user_info');
-  if (user_info) {
+  const user_info_str = Office.context.roamingSettings.get('user_info');
+  if (user_info_str) {
+    const user_info = JSON.parse(user_info_str);
     loadSignature(user_info);
   } else {
     // TODO: notification to open task pane
