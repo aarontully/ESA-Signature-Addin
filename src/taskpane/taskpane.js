@@ -4,6 +4,8 @@ Office.onReady((info) => {
     document.getElementById("app-body").style.display = "flex";
     document.getElementById("run").onclick = run;
 
+    document.getElementById(detailsForm).onsubmit = saveUserInfo;
+
     checkUserInfo();
   }
 });
