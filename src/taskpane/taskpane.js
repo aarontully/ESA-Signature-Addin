@@ -50,7 +50,6 @@ function saveUserInfo(event) {
     signoff: document.getElementById("signoff").value.trim()
   };
 
-  console.log("User info:", user_info);
   Office.context.roamingSettings.set('user_info', JSON.stringify(user_info));
   Office.context.roamingSettings.saveAsync(function (asyncResult) {
     if (asyncResult.status === Office.AsyncResultStatus.Failed) {

@@ -1,14 +1,18 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const user_info_str = Office.context.roamingSettings.get('user_info');
-    if (user_info_str) {
-        const user_info = JSON.parse(user_info_str);
-        displayUserInfo(user_info);
-    }
+Office.onReady((info) => {
+    if (info.host === Office.HostType.Outlook) {
+        document.addEventListener("DOMContentLoaded", function () {
+            const user_info_str = Office.context.roamingSettings.get('user_info');
+            if (user_info_str) {
+                const user_info = JSON.parse(user_info_str);
+                displayUserInfo(user_info);
+            }
 
-    document.getElementById("set-button").addEventListener("click", function () {
-        // Logic to finalize the details
-        alert("Details have been set!");
-    });
+            document.getElementById("set-button").addEventListener("click", function () {
+                // Logic to finalize the details
+                alert("Details have been set!");
+            });
+        });
+    }
 });
 
 function displayUserInfo(user_info) {
