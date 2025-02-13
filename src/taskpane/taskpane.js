@@ -3,12 +3,20 @@ Office.onReady((info) => {
     document.getElementById("sideload-msg").style.display = "none";
     document.getElementById("app-body").style.display = "flex";
     document.getElementById("run").onclick = run;
-
-    document.getElementById(detailsForm).onsubmit = saveUserInfo;
+    initializeFabricUI();
 
     checkUserInfo();
   }
 });
+
+function initializeFabricUI() {
+  // You might need to manually initialize certain Fabric components
+  // For example, dropdowns:
+  var elements = document.querySelectorAll('.ms-Dropdown');
+  for (var i = 0; i < elements.length; i++) {
+      new fabric['Dropdown'](elements[i]);
+  }
+}
 
 function checkUserInfo() {
   const user_info_str = Office.context.roamingSettings.get('user_info');
@@ -22,6 +30,15 @@ function checkUserInfo() {
 
 function saveUserInfo(event) {
   event.preventDefault();
+  console.log("Saving user info...");
+
+  const name = document.getElementById("name").value;
+  const title = document.getElementById("title").value;
+
+  if (!name || !title) {
+    alert("Please fill in all required fields.");
+    return;
+}
 
   const user_info = {
     name: document.getElementById("name").value.trim(),
@@ -33,12 +50,14 @@ function saveUserInfo(event) {
     signoff: document.getElementById("signoff").value.trim()
   };
 
+  console.log("User info:", user_info);
   Office.context.roamingSettings.set('user_info', JSON.stringify(user_info));
   Office.context.roamingSettings.saveAsync(function (asyncResult) {
     if (asyncResult.status === Office.AsyncResultStatus.Failed) {
       console.log("Failed to save user info. Please try again.");
     } else {
       console.log("User info saved successfully!");
+      window.location.href = "preview.html";
     }
   });
 }
